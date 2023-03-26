@@ -24,8 +24,8 @@
 
 /**
  * @typedef {Object} SimpleDevice
- * @property {string} uid
- * @property {string} name
+ * @property {number} uid
+ * @property {string} vendor
  */
 
 /**
@@ -34,16 +34,16 @@
 
 /**
  * @typedef {Object} Device
- * @property {string} uid
- * @property {string} name
- * @property {number} dateCreated
+ * @property {number} uid
+ * @property {string} vendor
+ * @property {number} date_created
  * @property {Status} status
  */
 
 /**
  * @typedef {Object} OptionalDevice
  * @property {string} [uid]
- * @property {string} [name]
+ * @property {string} [vendor]
  * @property {number} [dateCreated]
  * @property {Status} [status]
  */
@@ -52,7 +52,7 @@ export default class DataProducerInterface {
   /**
    * @public
    * Returns list of available gateways
-   * @return SimpleGateway[]
+   * @return {SimpleGateway[]}
    */
   getGateways() {
     throw new Error('Unimplemented method getGateways');
@@ -62,7 +62,7 @@ export default class DataProducerInterface {
    * @public
    * Returns information about gateway
    * @param {string} serial - gateway's unique serial number
-   * @return Gateway|null
+   * @return {Gateway|null}
    */
   getGateway(serial) {
     throw new Error('Unimplemented method getGateway');
@@ -72,7 +72,7 @@ export default class DataProducerInterface {
    * @public
    * Modifies or creates new gateway
    * @param {OptionalGateway} gateway
-   * @return {serial: string}
+   * @return {{serial: string}}
    */
   putGateway(gateway) {
     throw new Error('Unimplemented method putGateway');
@@ -91,7 +91,7 @@ export default class DataProducerInterface {
    * @public
    * Returns list of available devices
    * @param {string} [serial] - unique gateway's serial number, should return all devices
-   * @return SimpleDevice[]
+   * @return {SimpleDevice[]|null}
    */
   getDevices(serial) {
     throw new Error('Unimplemented method getDevices');
@@ -100,8 +100,8 @@ export default class DataProducerInterface {
   /**
    * @public
    * Returns information about devices
-   * @param {string} uid - device's uid
-   * @return Device|null
+   * @param {number} uid - device's uid
+   * @return {Device|null}
    */
   getDevice(uid) {
     throw new Error('Unimplemented method getDevice');
@@ -111,7 +111,7 @@ export default class DataProducerInterface {
    * @public
    * Modifies or creates new device
    * @param {OptionalDevice} gateway
-   * @return {uid: string}
+   * @return {{uid: number}}
    */
   putDevice(gateway) {
     throw new Error('Unimplemented method putDevice');
@@ -120,7 +120,7 @@ export default class DataProducerInterface {
   /**
    * @public
    * Deletes device
-   * @param {string} uid - gateway's unique serial number
+   * @param {number} uid - gateway's unique serial number
    */
   deleteDevice(uid) {
     throw new Error('Unimplemented method deleteDevice');
@@ -131,7 +131,7 @@ export default class DataProducerInterface {
    * Binds devices to gateway
    * @param {string} serial - gateway's unique serial number
    * @param {number[]} devices - list of devices' uids
-   * @return number[] - list of successfully bound devices' uids
+   * @return {{bound: number[]}} - list of successfully bound devices' uids
    */
   bind(serial, devices) {
     throw new Error('Unimplemented method bind');

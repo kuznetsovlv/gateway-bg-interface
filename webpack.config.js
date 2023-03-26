@@ -1,9 +1,13 @@
 const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const development = process.env.NODE_ENV === 'development';
+const production = !development;
+
 module.exports = {
+  mode: development ? 'development' : 'production',
   context: resolve(__dirname, 'src'),
-  entry: './index.js',
+  entry: production ? './index.js' : './test/index.js',
   output: {
     filename: 'index.js',
     path: resolve(__dirname, 'dist')

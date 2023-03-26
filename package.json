@@ -4,9 +4,8 @@
   "description": "Back-end interface of gateway project, test task",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
-    "watch": "webpack --mode development --watch",
+    "dev": "cross-env NODE_ENV=development webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "prettier": "prettier --config .prettierrc --write .",
     "lint": "eslint -c .eslintrc.json --ext .js src/ --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,9 +20,9 @@
     "url": "https://github.com/kuznetsovlv/gateway-bg-interface/issues"
   },
   "homepage": "https://github.com/kuznetsovlv/gateway-bg-interface#readme",
-  "dependencies": {},
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-silence": "^2.0.0",

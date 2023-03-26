@@ -1,0 +1,7 @@
+src/
+.eslintrc.json
+.git/
+.gitignore
+.prettierignore
+.prettierrc
+webpack.config.js

@@ -97,10 +97,23 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                description: Unique serial number
+                type: object
+                properties:
+                  serial:
+                    type: string
+                    description: Unique serial number
+                required:
+                  - serial
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
           description: Forbidden
+        '404':
+          description: Not found
     delete:
       tags:
         - gateway
@@ -142,15 +155,17 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  uid:
-                    type: integer
-                  vendor:
-                    type: string
-                required:
-                  - uid
-                  - vendor
+                type: array
+                items:
+                  type: object
+                  properties:
+                    uid:
+                      type: integer
+                    vendor:
+                      type: string
+                  required:
+                    - uid
+                    - vendor
         '400':
           description: Bad request
           content:
@@ -207,7 +222,7 @@ paths:
                 type: object
                 properties:
                   uid:
-                    type: string
+                    type: number
                     description: uid
                 required:
                   - uid
@@ -216,10 +231,23 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                description: Unique serial number
+                type: object
+                properties:
+                  uid:
+                    type: number
+                    description: uid
+                required:
+                  - uid
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
           description: Forbidden
+        '404':
+          description: Not found
     delete:
       tags:
         - gateway
