@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 
 import DataProducerInterface from './DataProducerInterface';
+import { APP_TYPE, RESPONSE_HEADERS, ERROR_CODES } from './consttants';
 
 export { DataProducerInterface };
 
@@ -25,7 +26,6 @@ export default class Server {
     this.$port = port;
 
     this.$main = this.$main.bind(this);
-    this.$parseRequest = this.$parseRequest.bind(this);
     this.start = this.start.bind(this);
   }
 
@@ -35,12 +35,36 @@ export default class Server {
    * @param  res
    */
   $main(req, res) {
-    this.$parseRequest(req).then(console.log, console.log);
+    this.$parseRequest(req).then(
+      result => {
+        console.log(result);
+        res.writeHead(200, RESPONSE_HEADERS);
+        res.end(
+          JSON.stringify({
+            data: 'Hello World!'
+          })
+        );
+      },
+      error => this.$sendError(res, { error, errorCode: ERROR_CODES.wrongData })
+    );
+  }
 
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+  /**
+   * @private
+   * @param res
+   * @param {Error} error
+   * @param {string} errorCode
+   * @param {number} [responseCode = 400]
+   */
+  $sendError(
+    res,
+    { error, errorCode = ERROR_CODES.unknown, responseCode = 400 }
+  ) {
+    res.writeHead(responseCode, RESPONSE_HEADERS);
     res.end(
       JSON.stringify({
-        data: 'Hello World!'
+        code: errorCode,
+        message: error.message
       })
     );
   }
@@ -60,7 +84,7 @@ export default class Server {
 
       const [path = '', queryString] = url.split('?');
 
-      if (req.headers['content-type'] === 'application/json') {
+      if (req.headers['content-type'] === APP_TYPE) {
         let bodyJson = '';
         req.on('data', chunk => (bodyJson += chunk));
         req.on('end', () => {
