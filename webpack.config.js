@@ -25,10 +25,6 @@ module.exports = {
   context: resolve(__dirname, 'src'),
   entry: production ? './index.js' : './test/index.js',
   output: output(),
-  resolve: {
-    extensions: ['.js'],
-    alias: { '/': resolve(__dirname, 'src') }
-  },
   optimization: {
     splitChunks: { chunks: 'all' }
   },
