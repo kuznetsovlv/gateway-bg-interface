@@ -85,8 +85,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                description: Unique serial number
+                type: object
+                properties:
+                  serial:
+                    type: string
+                    description: Unique serial number
+                required:
+                  - serial
         '201':
           description: Created
           content:
@@ -199,8 +204,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                description: uid
+                type: object
+                properties:
+                  uid:
+                    type: string
+                    description: uid
+                required:
+                  - uid
         '201':
           description: Created
           content:
