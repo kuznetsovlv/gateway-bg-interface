@@ -142,7 +142,6 @@ export default class DataInterface {
    * Unbinds devices to gateway
    * @param {string} serial - gateway's unique serial number
    * @param {number[]} devices - list of devices' uids
-   * @return number[] - list of successfully unbound devices' uids
    */
   unbind(serial, devices) {
     throw new Error('Unimplemented method unbind');
