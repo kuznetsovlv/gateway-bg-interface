@@ -8,10 +8,6 @@
     "plugin:prettier/recommended",
     "eslint-config-silence"
   ],
-  //  "parser": "@babel/eslint-parser",
-  //  "parserOptions": {
-  //    "requireConfigFile": false
-  //  },
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error"],
