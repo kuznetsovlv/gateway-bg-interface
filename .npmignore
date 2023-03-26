@@ -2,6 +2,5 @@ src/
 .eslintrc.json
 .git/
 .gitignore
-.prettierignore
-.prettierrc
+.prettier*
 webpack.config.js
