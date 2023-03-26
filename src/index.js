@@ -1,25 +1,104 @@
 import { createServer } from 'node:http';
 
-import DataInterface from './DataInterface';
+import DataProducerInterface from './DataProducerInterface';
 
-const server = createServer((req, res) => {
-  console.log(req.method, req.url, req.headers);
-  let data = '';
-  req.on('data', chunk => {
-    data += chunk;
-  });
-  req.on('end', () => {
-    console.log(data);
-  });
+export { DataProducerInterface };
 
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(
-    JSON.stringify({
-      data: 'Hello World!'
-    })
-  );
-});
+/**
+ * @typedef {'GET'|'POST'|'PUT'|'DELETE'} Method
+ */
 
-server.listen(8000);
+/**
+ * @typedef {Object} ParsedRequest
+ * @property {string} path
+ * @property {Method} method
+ * @property {Object|*[]} data
+ */
 
-export { DataInterface };
+export default class Server {
+  /**
+   * @param {DataProducerInterface} dataProducer
+   * @param {number} [port = 8000]
+   */
+  constructor(dataProducer = new DataProducerInterface(), port = 8000) {
+    this.$dataProducer = dataProducer;
+    this.$port = port;
+
+    this.$main = this.$main.bind(this);
+    this.$parseRequest = this.$parseRequest.bind(this);
+    this.start = this.start.bind(this);
+  }
+
+  /**
+   * @private
+   * @param  req
+   * @param  res
+   */
+  $main(req, res) {
+    this.$parseRequest(req).then(console.log, console.log);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(
+      JSON.stringify({
+        data: 'Hello World!'
+      })
+    );
+  }
+
+  /**
+   * @private
+   * @param req
+   * @return Promise<ParsedRequest>
+   */
+  async $parseRequest(req) {
+    return new Promise((resolve, reject) => {
+      /**
+       * @type {Method}
+       */
+      const method = req.method;
+      const url = req.url;
+
+      const [path = '', queryString] = url.split('?');
+
+      if (req.headers['content-type'] === 'application/json') {
+        let bodyJson = '';
+        req.on('data', chunk => (bodyJson += chunk));
+        req.on('end', () => {
+          try {
+            const body = JSON.parse(bodyJson);
+            resolve({
+              method,
+              path: path.replace(/^\//, ''),
+              data: body
+            });
+          } catch (error) {
+            reject(new Error('Incorrect data format'));
+          }
+        });
+      } else {
+        const data = queryString
+          ? queryString.split('&').reduce((res, pare) => {
+              const [key, value] = pare.split('=');
+              res[key] = /^\d+$/.test(value) ? Number(value) : value;
+              return res;
+            }, {})
+          : {};
+
+        resolve({
+          method,
+          path: path.replace(/^\//, ''),
+          data
+        });
+      }
+    });
+  }
+
+  /**
+   * @public
+   */
+  start() {
+    createServer(this.$main).listen(this.$port);
+  }
+}
+
+new Server().start();
