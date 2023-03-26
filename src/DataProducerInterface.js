@@ -29,7 +29,7 @@
  */
 
 /**
- * @typedef {online|offline} Status
+ * @typedef {'online'|'offline'} Status
  */
 
 /**
@@ -48,7 +48,7 @@
  * @property {Status} [status]
  */
 
-export default class DataInterface {
+export default class DataProducerInterface {
   /**
    * @public
    * Returns list of available gateways
