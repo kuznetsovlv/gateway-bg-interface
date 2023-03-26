@@ -1,5 +1,7 @@
 import { createServer } from 'node:http';
 
+import DataInterface from './DataInterface';
+
 const server = createServer((req, res) => {
   console.log(req.method, req.url, req.headers);
   let data = '';
@@ -19,3 +21,5 @@ const server = createServer((req, res) => {
 });
 
 server.listen(8000);
+
+export { DataInterface };
