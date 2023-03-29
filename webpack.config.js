@@ -28,6 +28,6 @@ module.exports = {
   optimization: {
     splitChunks: { chunks: 'all' }
   },
-  target: 'node18.12',
+  target: 'node',
   plugins: [new CleanWebpackPlugin()]
 };
