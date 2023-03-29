@@ -7,3 +7,5 @@ export const ERROR_CODES = {
   wrongRequest: 'WRONG_REQUEST',
   unknown: 'UNKNOWN_ERROR'
 };
+
+export const BASE = '/api/v1/';

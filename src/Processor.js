@@ -2,7 +2,8 @@ import {
   APP_TYPE,
   RESPONSE_HEADERS,
   ERROR_CODES,
-  EMPTY_RESPONSE_HEADERS
+  EMPTY_RESPONSE_HEADERS,
+  BASE
 } from './consttants';
 
 /**
@@ -95,7 +96,15 @@ export default class Processor {
       const method = this.$request.method;
       const url = this.$request.url;
 
-      const [path = '', queryString] = url.split('?');
+      if (!new RegExp(`^${BASE}.+`).test(url)) {
+        reject(new Error('Incorrect url'));
+        return;
+      }
+
+      const [clearUrl = '', queryString] = url.split('?');
+
+      const path = clearUrl.replace(new RegExp(`^${BASE}`), '');
+
       const query = queryString
         ? queryString.split('&').reduce((res, pare) => {
             const [key, value] = pare.split('=');
@@ -316,7 +325,7 @@ export default class Processor {
           });
         }
       },
-      error => this.$sendError({ error, errorCode: ERROR_CODES.wrongData })
+      error => this.$sendError({ error, errorCode: ERROR_CODES.wrongRequest })
     );
   }
 }
