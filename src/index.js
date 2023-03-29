@@ -3,8 +3,6 @@ import { createServer } from 'node:http';
 import DataProducerInterface from './DataProducerInterface';
 import Processor from './Processor';
 
-export { DataProducerInterface };
-
 export default class Server {
   /**
    * @param {DataProducerInterface} dataProducer
@@ -33,3 +31,7 @@ export default class Server {
     createServer(this.$main).listen(this.$port);
   }
 }
+
+const getInterface = () => DataProducerInterface;
+
+export { getInterface };

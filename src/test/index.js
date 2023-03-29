@@ -1,4 +1,5 @@
-import Server from '../index';
-import DataProducer from './DataProducer';
+import Server, { getInterface } from '../index';
 
-new Server(new DataProducer()).start();
+class DataProvider extends getInterface() {}
+
+new Server(new DataProvider()).start();

@@ -13,10 +13,10 @@ npm install gateway-bg-interface
 In the code:
 
 ```javascript
-import Server, {DataProviderInterface} from 'gateway-bg-interface';
+import Server, {getInterface} from 'gateway-bg-interface';
 
 //Proxy class to interact with DB.
-class DataProvider extends DataProviderInterface {
+class DataProvider extends getInterface() {
     //Implement methods here
 }
 

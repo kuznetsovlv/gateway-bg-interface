@@ -35,5 +35,6 @@
     "prettier": "^2.8.7",
     "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1"
-  }
+  },
+  "exports": {".":  "./src/index.js"}
 }
