@@ -56,7 +56,6 @@ In the code you have to create `DataProvider` class that extends `DataProviderIn
  * @typedef {Object} OptionalDevice
  * @property {string} [uid]
  * @property {string} [vendor]
- * @property {number} [dateCreated]
  * @property {Status} [status]
  */
 
@@ -122,10 +121,10 @@ export default class DataProducerInterface {
   /**
    * @public
    * Modifies or creates new device
-   * @param {OptionalDevice} gateway
+   * @param {OptionalDevice} device
    * @return {{uid: number}}
    */
-  putDevice(gateway) {
+  putDevice(device) {
     throw new Error('Unimplemented method putDevice');
   }
 
