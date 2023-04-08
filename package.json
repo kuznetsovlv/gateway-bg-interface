@@ -1,6 +1,6 @@
 {
   "name": "gateway-bg-interface",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Back-end interface of gateway project, test task",
   "main": "dist/index.js",
   "files": [

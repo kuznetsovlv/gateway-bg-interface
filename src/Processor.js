@@ -160,7 +160,7 @@ export default class Processor {
   $get(path, { serial, uid }) {
     switch (path) {
       case 'gateways':
-        this.$sendData(200, this.$dataProducer.getGateways());
+        this.$sendFoundResult(this.$dataProducer.getGateways());
         break;
       case 'gateway':
         if (typeof serial === 'string') {
@@ -234,7 +234,7 @@ export default class Processor {
     switch (path) {
       case 'gateway':
         if (typeof serial === 'string') {
-          this.$dataProducer.deleteGateway(serial);
+          this.$sendData(200, this.$dataProducer.deleteGateway(serial));
         } else {
           this.$sendError({
             error: new Error("Gateway's serial number is not set"),
@@ -244,7 +244,7 @@ export default class Processor {
         break;
       case 'device':
         if (typeof uid === 'number') {
-          this.$dataProducer.deleteDevice(uid);
+          this.$sendData(200, this.$dataProducer.deleteDevice(uid));
         } else {
           this.$sendError({
             error: new Error("Device's uid is not set"),
